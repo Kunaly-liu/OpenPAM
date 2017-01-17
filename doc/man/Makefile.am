@@ -66,9 +66,6 @@ EXTRA_DIST = openpam.man pam.man
 ALLCMAN = $(PMAN) $(MMAN) $(OMAN)
 GENMAN = $(ALLCMAN) openpam.3 pam.3
 
-ALLCMAN = $(PAMCMAN) $(OATHCMAN)
-GENMAN = $(ALLCMAN) $(PAMXMAN) $(OATHXMAN)
-
 dist_man3_MANS = $(GENMAN) pam_conv.3
 
 dist_man5_MANS = pam.conf.5
@@ -78,7 +75,6 @@ CLEANFILES = $(GENMAN)
 GENDOC = $(top_srcdir)/misc/gendoc.pl
 
 LIBSRCDIR = $(top_srcdir)/lib/libpam
-endif
 
 VPATH = $(LIBSRCDIR) $(srcdir)
 

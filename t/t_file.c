@@ -92,6 +92,8 @@ t_fprintf(struct t_file *tf, const char *fmt, ...)
 	va_end(ap);
 	if (ferror(tf->file))
 		err(1, "%s(): vfprintf()", __func__);
+	if (fflush(tf->file) != 0)
+		err(1, "%s(): fflush()", __func__);
 	return (len);
 }
 

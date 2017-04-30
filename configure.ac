@@ -2,7 +2,7 @@ dnl $OpenPAM$
 
 AC_PREREQ([2.62])
 AC_REVISION([$OpenPAM$])
-AC_INIT([OpenPAM], [trunk], [des@des.no], [openpam], [http://www.openpam.org/])
+AC_INIT([OpenPAM], [20170430], [des@des.no], [openpam], [http://www.openpam.org/])
 AC_CONFIG_SRCDIR([lib/libpam/pam_start.c])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])

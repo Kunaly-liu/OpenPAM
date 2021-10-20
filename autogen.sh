@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $OpenPAM$
-#
 
 libtoolize --copy --force
 aclocal -I m4

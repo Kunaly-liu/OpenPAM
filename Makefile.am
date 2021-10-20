@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = misc include lib bin modules

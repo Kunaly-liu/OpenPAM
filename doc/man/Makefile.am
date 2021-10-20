@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 NULL =
 
 # Standard PAM API

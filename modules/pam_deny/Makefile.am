@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 if CUSTOM_MODULES_DIR
 moduledir = $(OPENPAM_MODULES_DIR)
 else

@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 SUBDIRS = openpam_dump_policy
 
 if WITH_PAMTEST

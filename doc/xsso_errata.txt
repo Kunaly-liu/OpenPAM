@@ -1,5 +1,3 @@
-$OpenPAM$
-
 Errata in XSSO, chapter 5:
 
 p. 25:	the first member of struct pam_response is named "resp", not

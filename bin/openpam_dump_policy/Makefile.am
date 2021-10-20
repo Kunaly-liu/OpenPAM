@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/lib/libpam
 
 noinst_PROGRAMS = openpam_dump_policy

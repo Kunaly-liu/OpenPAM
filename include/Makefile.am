@@ -1,3 +1,1 @@
-# $OpenPAM$
-
 SUBDIRS = security

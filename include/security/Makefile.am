@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 securitydir = $(includedir)/security
 
 security_HEADERS = \

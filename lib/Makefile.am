@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 SUBDIRS =
 
 if !WITH_SYSTEM_LIBPAM

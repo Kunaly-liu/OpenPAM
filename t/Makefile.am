@@ -1,5 +1,3 @@
-# $OpenPAM$
-
 if WITH_TEST
 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/lib/libpam \

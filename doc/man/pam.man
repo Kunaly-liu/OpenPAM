@@ -1,6 +1,3 @@
-.\"
-.\" $OpenPAM$
-.\"
 .Sh DESCRIPTION
 The Pluggable Authentication Modules (PAM) library abstracts a number
 of common authentication-related operations and provides a framework

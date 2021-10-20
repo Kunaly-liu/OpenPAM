@@ -1,5 +1,5 @@
 AC_PREREQ([2.62])
-AC_INIT([OpenPAM], [trunk], [des@des.no], [openpam], [http://www.openpam.org/])
+AC_INIT([OpenPAM], [trunk], [des@des.no], [openpam], [https://openpam.org/])
 AC_CONFIG_SRCDIR([lib/libpam/pam_start.c])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
@@ -130,6 +130,7 @@ AC_CONFIG_FILES([
     bin/su/Makefile
     doc/Makefile
     doc/man/Makefile
+    freebsd/Makefile
     include/Makefile
     include/security/Makefile
     lib/Makefile
@@ -142,7 +143,6 @@ AC_CONFIG_FILES([
     modules/pam_unix/Makefile
     t/Makefile
 ])
-AC_CONFIG_FILES([mkpkgng],[chmod +x mkpkgng])
 AC_CONFIG_FILES([misc/coverage.sh],[chmod +x misc/coverage.sh])
 AC_CONFIG_FILES([misc/coverity.sh],[chmod +x misc/coverity.sh])
 AC_OUTPUT

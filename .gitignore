@@ -8,6 +8,7 @@
 /config.status
 /config.sub
 /configure
+/cov
 /depcomp
 /install-sh
 /libtool
@@ -24,5 +25,6 @@
 *.log
 *.o
 *.pc
+*.profraw
 Makefile
 Makefile.in

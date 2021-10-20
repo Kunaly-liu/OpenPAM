@@ -1,4 +1,4 @@
-AC_PREREQ([2.62])
+AC_PREREQ([2.69])
 AC_INIT([OpenPAM], [trunk], [des@des.no], [openpam], [https://openpam.org/])
 AC_CONFIG_SRCDIR([lib/libpam/pam_start.c])
 AC_CONFIG_MACRO_DIR([m4])
@@ -7,13 +7,15 @@ AM_CONFIG_HEADER([config.h])
 
 # C compiler and features
 AC_LANG(C)
-AC_PROG_CC
+AC_PROG_CC([clang gcc cc])
 AC_PROG_CC_STDC
 AC_PROG_CPP
+AC_PROG_CXX([clang++ g++ c++])
 AC_GNU_SOURCE
 AC_C_CONST
 AC_C_RESTRICT
 AC_C_VOLATILE
+AX_COMPILER_VENDOR
 
 # libtool
 LT_PREREQ([2.2.6])
@@ -121,6 +123,21 @@ AC_ARG_ENABLE([debugging-symbols],
 AC_ARG_ENABLE([werror],
     AS_HELP_STRING([--enable-werror], [use -Werror (default is NO)]),
     [CFLAGS="${CFLAGS} -Werror"])
+
+AC_ARG_ENABLE([code-coverage],
+    AS_HELP_STRING([--enable-code-coverage],
+        [enable code coverage]))
+AM_CONDITIONAL([CODE_COVERAGE], [test x"$enable_code_coverage" = x"yes"])
+AS_IF([test x"$enable_code_coverage" = x"yes"], [
+    AS_IF([test x"$ax_cv_c_compiler_vendor" = x"clang"], [
+        CFLAGS="${CFLAGS} -fprofile-instr-generate -fcoverage-mapping"
+    ], [
+        AC_MSG_ERROR([code coverage is only supported with clang])
+    ])
+    AC_DEFINE([CODE_COVERAGE], [1], [Define to 1 if code coverage is enabled])
+    AC_MSG_NOTICE([code coverage enabled])
+])
+AC_SUBST([enable_code_coverage], [$enable_code_coverage])
 
 AC_CONFIG_FILES([
     Makefile

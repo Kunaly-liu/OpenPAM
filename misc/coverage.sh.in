@@ -16,18 +16,19 @@ while getopts "j:" opt ; do
 	esac
 done
 
-if ! which -s cov01 covhtml ; then
-	echo "coverage tools not found" >&2
+if ! [ "@enable_code_coverage@" = "yes" ] ; then
+	echo "Code coverage disabled." >&2
+	echo "Re-run ./configure with --enable-code-coverage and try again." >&2
 	exit 1
 fi
+
 srcdir="@abs_top_srcdir@"
-htmldir="${srcdir}/covhtml"
-export COVFILE="${srcdir}/test.cov"
-gmake -C "${srcdir}" clean
-find "${srcdir}" -type f -name "${COVFILE##*/}" -delete
-rm -rf "${htmldir}"
-cov01 -1
-gmake -C "${srcdir}" $j check || exit 1
-covhtml -d "${srcdir}" -f "${COVFILE}" "${htmldir}"
-cov01 -0
-gmake -C "${srcdir}" clean
+profdir="@abs_top_builddir@/cov"
+profraw="${profdir}/@PACKAGE@.%p.raw"
+profdata="${profdir}/@PACKAGE@.profdata"
+export LLVM_PROFILE_FILE="${profraw}"
+[ -e "${profdir}" ] && rm -r "${profdir}"
+gmake -C "${srcdir}" $j check
+llvm-profdata merge -sparse "${profdir}/@PACKAGE@".*.raw -o "${profdata}"
+llvm-cov show -instr-profile="${profdata}" -format=html -output-dir="${profdir}" \
+	 --object "@abs_top_builddir@/lib/libpam/.libs/libpam.so"

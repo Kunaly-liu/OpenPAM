@@ -12,6 +12,7 @@ TESTS += t_openpam_ctype
 TESTS += t_openpam_dispatch
 TESTS += t_openpam_readword
 TESTS += t_openpam_readlinev
+TESTS += t_openpam_straddch
 TESTS += t_pam_env
 check_PROGRAMS = $(TESTS)
 

@@ -57,7 +57,6 @@ openpam_readlinev(FILE *f, int *lineno, int *lenp)
 	wordvsize = MIN_WORDV_SIZE;
 	wordvlen = 0;
 	if ((wordv = malloc(wordvsize * sizeof *wordv)) == NULL) {
-		openpam_log(PAM_LOG_ERROR, "malloc(): %m");
 		errno = ENOMEM;
 		return (NULL);
 	}
@@ -68,7 +67,6 @@ openpam_readlinev(FILE *f, int *lineno, int *lenp)
 			wordvsize *= 2;
 			tmp = realloc(wordv, wordvsize * sizeof *wordv);
 			if (tmp == NULL) {
-				openpam_log(PAM_LOG_ERROR, "malloc(): %m");
 				errno = ENOMEM;
 				break;
 			}

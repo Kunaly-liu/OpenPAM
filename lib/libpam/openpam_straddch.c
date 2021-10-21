@@ -56,7 +56,6 @@ openpam_straddch(char **str, size_t *size, size_t *len, int ch)
 		/* initial allocation */
 		tmpsize = MIN_STR_SIZE;
 		if ((tmpstr = malloc(tmpsize)) == NULL) {
-			openpam_log(PAM_LOG_ERROR, "malloc(): %m");
 			errno = ENOMEM;
 			return (-1);
 		}
@@ -67,7 +66,6 @@ openpam_straddch(char **str, size_t *size, size_t *len, int ch)
 		/* additional space required */
 		tmpsize = *size * 2;
 		if ((tmpstr = realloc(*str, tmpsize)) == NULL) {
-			openpam_log(PAM_LOG_ERROR, "realloc(): %m");
 			errno = ENOMEM;
 			return (-1);
 		}

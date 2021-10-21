@@ -33,26 +33,26 @@ AC_DEFINE_UNQUOTED(LIB_MAJ, $LIB_MAJ, [OpenPAM library major number])
 
 AC_ARG_ENABLE([debug],
     AC_HELP_STRING([--enable-debug],
-	[turn debugging macros on]),
+        [turn debugging macros on]),
     AC_DEFINE(OPENPAM_DEBUG, 1, [Turn debugging macros on]))
 
 AC_ARG_ENABLE([unversioned-modules],
     AC_HELP_STRING([--disable-unversioned-modules],
-	[support loading of unversioned modules]),
+        [support loading of unversioned modules]),
     [AS_IF([test x"$enableval" = x"no"], [
-	AC_DEFINE(DISABLE_UNVERSIONED_MODULES,
-	    1,
-	    [Whether loading unversioned modules support is disabled])
+        AC_DEFINE(DISABLE_UNVERSIONED_MODULES,
+            1,
+            [Whether loading unversioned modules support is disabled])
     ])])
 
 AC_ARG_WITH([modules-dir],
     AC_HELP_STRING([--with-modules-dir=DIR],
-	[OpenPAM modules directory]),
+        [OpenPAM modules directory]),
     [AS_IF([test x"$withval" != x"no"], [
-	OPENPAM_MODULES_DIR="$withval"
-	AC_DEFINE_UNQUOTED(OPENPAM_MODULES_DIR, 
-	    "${OPENPAM_MODULES_DIR%/}",
-	    [OpenPAM modules directory])
+        OPENPAM_MODULES_DIR="$withval"
+        AC_DEFINE_UNQUOTED(OPENPAM_MODULES_DIR,
+            "${OPENPAM_MODULES_DIR%/}",
+            [OpenPAM modules directory])
     ])])
 AC_SUBST(OPENPAM_MODULES_DIR)
 AM_CONDITIONAL([CUSTOM_MODULES_DIR], [test x"$OPENPAM_MODULES_DIR" != x""])

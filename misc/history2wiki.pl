@@ -1,6 +1,6 @@
 #!/usr/bin/perl -Tw
 #-
-# Copyright (c) 2012-2014 Dag-Erling Smørgrav
+# Copyright (c) 2012-2021 Dag-Erling Smørgrav
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,8 +27,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $Id$
-#
 
 use strict;
 use warnings;
@@ -43,22 +41,26 @@ while (<>) {
 	    last if m/^=+$/;
 	    $changes .= $_;
 	}
-	$changes =~ s/^ - ([A-Z]+): / - '''$1''' /gm;
-	$changes =~ s/([\w.-]+\(\d*\))/`$1`/gs;
-	$changes =~ s/([^'`])\b([A-Z_]{4,}(?:\s+[A-Z_]{4,})*)\b([^'`])/$1`$2`$3/gs;
-	$changes =~ s/(CVE-\d{4}-\d+)/[$CVEURL$1 $1]/gs;
+	$changes =~ s/\r//gs;
+	$changes =~ s/^ - ([A-Z]+): / - **$1** /gm;
+	$changes =~ s/([\w.-]+\(\d*\)|\S*[_{}<>#\\\/]\S*)/`$1`/gs;
+	$changes =~ s/([.,])`/`$1/gs;
+	$changes =~ s/([^'`*])\b([A-Z_]{4,}(?:\s+[A-Z_]{4,})*)\b([^'`*])/$1`$2`$3/gs;
+	$changes =~ s/`(PAM|XSSO|\/)`/$1/gs; # false positives above
+	$changes =~ s/(CVE-\d{4}-\d+)/[$1]($CVEURL$1)/gs;
 	$changes =~ s/([.!?])\n +(\w)/$1  $2/gs;
-	$changes =~ s/(\S)\n +(\S)/$1 $2/gs;
-	open(my $fh, ">", "$relname.txt")
-	    or die("$relname.txt: $!\n");
-	print($fh "= OpenPAM $relname =\n",
-	      "\n",
-	      "OpenPAM $relname was released on $reldate.\n",
+	$changes =~ s/(\S)\n +([^ -])/$1 $2/gs;
+	$changes =~ s/\n/\r\n/gs;
+	open(my $fh, ">", "Releases-$relname.md")
+	    or die("Releases-$relname.md: $!\n");
+	print($fh "# OpenPAM $relname\r\n",
+	      "\r\n",
+	      "OpenPAM $relname was released on $reldate.\r\n",
 	      $changes,
-	      "\n",
-	      "[http://sourceforge.net/projects/openpam/files/openpam/$relname/ Download from Sourceforge]\n");
+	      "\r\n",
+	      "Download from [here](/downloads) or [Sourceforge](http://sourceforge.net/projects/openpam/files/openpam/$relname/)\r\n");
 	close($fh);
-	print("|| $reldate || [[Releases/$relname|$relname]] ||\n");
+	print("| $reldate | [$relname](Releases-$relname) |\r\n");
     }
 }
 

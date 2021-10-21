@@ -127,17 +127,23 @@ AC_ARG_ENABLE([werror],
 AC_ARG_ENABLE([code-coverage],
     AS_HELP_STRING([--enable-code-coverage],
         [enable code coverage]))
-AM_CONDITIONAL([CODE_COVERAGE], [test x"$enable_code_coverage" = x"yes"])
 AS_IF([test x"$enable_code_coverage" = x"yes"], [
-    AS_IF([test x"$ax_cv_c_compiler_vendor" = x"clang"], [
-        CFLAGS="${CFLAGS} -fprofile-instr-generate -fcoverage-mapping"
+    AM_COND_IF([WITH_TEST], [
+        AS_IF([test x"$ax_cv_c_compiler_vendor" = x"clang"], [
+            CFLAGS="${CFLAGS} -fprofile-instr-generate -fcoverage-mapping"
+            clang_code_coverage="yes"
+	    AC_SUBST([clang_ver], [${CC#clang}])
+        ], [
+            AC_MSG_ERROR([code coverage is only supported with clang])
+        ])
+        AC_DEFINE([WITH_CODE_COVERAGE], [1], [Define to 1 if code coverage is enabled])
+        AC_MSG_NOTICE([code coverage enabled])
     ], [
-        AC_MSG_ERROR([code coverage is only supported with clang])
+        AC_MSG_ERROR([code coverage requires unit tests])
     ])
-    AC_DEFINE([CODE_COVERAGE], [1], [Define to 1 if code coverage is enabled])
-    AC_MSG_NOTICE([code coverage enabled])
 ])
-AC_SUBST([enable_code_coverage], [$enable_code_coverage])
+AM_CONDITIONAL([WITH_CODE_COVERAGE], [test x"$enable_code_coverage" = x"yes"])
+AM_CONDITIONAL([CLANG_CODE_COVERAGE], [test x"$clang_code_coverage" = x"yes"])
 
 AC_CONFIG_FILES([
     Makefile
@@ -160,6 +166,5 @@ AC_CONFIG_FILES([
     modules/pam_unix/Makefile
     t/Makefile
 ])
-AC_CONFIG_FILES([misc/coverage.sh],[chmod +x misc/coverage.sh])
 AC_CONFIG_FILES([misc/coverity.sh],[chmod +x misc/coverity.sh])
 AC_OUTPUT
